@@ -2,29 +2,47 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-
-#container {
-color: blue; 
-background: pink; 
-border: solid black 1px;
-display: flex;
-width: 600px;
-height: 600px;
-display: grid;
-z-index: 100;
-/* border: 0;
-margin: 0;
-padding: 0;
-box-sizing: ; */
-}
-
-.box{
-    background-color: beige;
+    background-color: #A0AF84;
     
-}
+  }
+  
+  #container {
+    color: blue; 
+    background: rgb(255, 255, 255); 
+    border: solid rgb(213, 211, 211) 1px;
+    display: flex;
+    width: 600px;
+    height: 600px;
+    display: grid;
+    z-index: 100;
+    box-shadow: 0px 0px 10px rgba(49, 47, 47, 0.5);
+    background-color: rgb(249, 249, 241);;
+  }
+  
+  .box {
+    background-color: rgb(249, 249, 241);
+  }
+  
+  .active {
+    background-color: rgb(0, 0, 0);
+  }
+  
+  .btnContain {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 602px;
+  }
 
-.active {
-    background-color: fuchsia;
-}
+  h1{
+    color: rgb(0, 0, 0);
+  }
+
+  button{
+    color: rgb(93, 145, 243);
+    background-color: rgb(249, 249, 241);
+    box-shadow: 0px 0px 10px rgba(67, 64, 64, 0.5);
+    border: 0;
+    border-radius: 4px;
+  }
+  

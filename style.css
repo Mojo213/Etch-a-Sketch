@@ -28,3 +28,11 @@ box-sizing: ; */
 .active {
     background-color: fuchsia;
 }
+
+.btnContain{
+   margin-bottom: 10px;
+   display: flex;
+   justify-content: space-evenly;
+   width: 602px;
+
+}

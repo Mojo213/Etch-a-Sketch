@@ -1,24 +1,48 @@
-const body = document.querySelector('body')
+const body = document.querySelector('body');
 const container = document.querySelector('#container');
 const btnContainer = document.createElement('div');
 btnContainer.classList.add('btnContain');
 body.insertBefore(btnContainer, container);
-const btn1 = document.createElement('button');
-btnContainer.appendChild(btn1);
-btn1.textContent = 'Enter grid size';
-btn1.classList.add('btn1');
-const btn2 = document.createElement('button');
-btnContainer.appendChild(btn2);
-btn2.textContent = 'Button2';
-btn2.classList.add('btn2');
-const btn3 = document.createElement('button');
-btnContainer.appendChild(btn3);
-btn3.textContent = 'Button3';
-btn3.classList.add('btn3');
 
-btn1.addEventListener('click', (e) => {
-    alert('grid size clicked');
-})
+const gridSizeBtn = document.createElement('button');
+btnContainer.appendChild(gridSizeBtn);
+gridSizeBtn.textContent = 'Enter Grid Size';
+gridSizeBtn.classList.add('gridsize');
+
+const refreshBtn = document.createElement('button');
+btnContainer.appendChild(refreshBtn);
+refreshBtn.textContent = 'Refresh';
+refreshBtn.classList.add('refresh');
+const newGameBtn = document.createElement('button');
+btnContainer.appendChild(newGameBtn);
+newGameBtn.textContent = 'New Game';
+newGameBtn.classList.add('newgame');
+
+let mouseDown = false;
+container.addEventListener('mousedown',() => (mouseDown = true));
+container.addEventListener('mouseup', () => (mouseDown = false));
+
+let col = '';
+let rows = '';
+
+
+gridSizeBtn.addEventListener('click', () => {
+  col = prompt('enter grid column', ''); 
+  rows = prompt('enter grid row', '');
+  createDiv(col, rows);
+});
+
+refreshBtn.addEventListener('click', () => {
+  const divs = container.querySelectorAll('div');
+  divs.forEach(div => {
+    div.classList.remove('active');
+    div.classList.add('box');
+  });
+});
+
+newGameBtn.addEventListener('click', refreshPage);
+
+
 
 function createDiv (col, rows) {
   for (let i = 0; i < (col*rows); i++) {
@@ -28,12 +52,18 @@ function createDiv (col, rows) {
     div.classList.add('box');
     container.appendChild(div);
 
-    div.addEventListener('mouseenter', () => {
-      div.classList.toggle('active');
-    //   div.classList.remove('box');
-    //   div.classList.add('active');
+    div.addEventListener('mousemove', () => {
+     if (mouseDown) {
+      div.classList.remove('box');
+      div.classList.add('active');
+     }
     });
+
+
   }
 }
 
-createDiv(16,16);
+function refreshPage() {
+  location.reload();
+}
+

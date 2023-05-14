@@ -9,61 +9,83 @@ btnContainer.appendChild(gridSizeBtn);
 gridSizeBtn.textContent = 'Enter Grid Size';
 gridSizeBtn.classList.add('gridsize');
 
-const refreshBtn = document.createElement('button');
-btnContainer.appendChild(refreshBtn);
-refreshBtn.textContent = 'Refresh';
-refreshBtn.classList.add('refresh');
-const newGameBtn = document.createElement('button');
-btnContainer.appendChild(newGameBtn);
-newGameBtn.textContent = 'New Game';
-newGameBtn.classList.add('newgame');
+const eraseBtn = document.createElement('button');
+btnContainer.appendChild(eraseBtn);
+eraseBtn.textContent = 'Erase';
+eraseBtn.classList.add('erase');
+
+const rgbBtn = document.createElement('button');
+btnContainer.appendChild(rgbBtn);
+rgbBtn.textContent = 'RGB';
+rgbBtn.classList.add('color');
 
 let mouseDown = false;
 container.addEventListener('mousedown',() => (mouseDown = true));
 container.addEventListener('mouseup', () => (mouseDown = false));
 
-let col = '';
-let rows = '';
+let col ;
+let rows ;
 
+gridSizeBtn.addEventListener('click', () => { 
+  col = parseInt(prompt('Enter a number for the grid column', '')); 
+  rows = parseInt(prompt('Enter a number for the grid row', ''));
 
-gridSizeBtn.addEventListener('click', () => {
-  col = prompt('enter grid column', ''); 
-  rows = prompt('enter grid row', '');
-  createDiv(col, rows);
+  if (col >= 1 && col <= 100 && rows >= 1 && rows <= 100) {
+    createDiv(col, rows);
+  } else {
+    alert('Please enter a number between 1 and 100.');
+  }
 });
 
-refreshBtn.addEventListener('click', () => {
+
+eraseBtn.addEventListener('click', () => {
   const divs = container.querySelectorAll('div');
   divs.forEach(div => {
     div.classList.remove('active');
-    div.classList.add('box');
+    div.classList.add('inactive');
+    div.removeAttribute('style');
   });
 });
 
-newGameBtn.addEventListener('click', refreshPage);
-
-
 
 function createDiv (col, rows) {
-  for (let i = 0; i < (col*rows); i++) {
+  for (let i = 0; i < (col * rows); i++) {
     const div = document.createElement('div');
     container.style.gridTemplateColumns = `repeat(${col}, 1fr)`;
     container.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
-    div.classList.add('box');
+    div.classList.add('inactive');
     container.appendChild(div);
 
     div.addEventListener('mousemove', () => {
      if (mouseDown) {
-      div.classList.remove('box');
+       if (rgbBtn.classList.contains('rgb')){
+          div.style.backgroundColor = 'rgb('+ randomRgb() + ')';
+       }else {
+      div.classList.remove('inactive');
       div.classList.add('active');
+       }
      }
     });
-
-
   }
 }
 
-function refreshPage() {
-  location.reload();
-}
+
+function randomRgb () { 
+ let red = Math.floor(Math.random() * 255);
+ let green = Math.floor(Math.random() * 255);
+ let blue = Math.floor(Math.random() * 255);
+  return `${red}, ${green}, ${blue}`;
+} 
+
+rgbBtn.addEventListener('click', () => {
+  if (rgbBtn.classList.contains('color')){ 
+      rgbBtn.classList.remove('color'); 
+      rgbBtn.classList.add('rgb');
+      } else {
+      rgbBtn.classList.add('color');
+      rgbBtn.classList.remove('rgb');}
+});
+
+createDiv(16,16);
+
 
